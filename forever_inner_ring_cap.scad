@@ -322,13 +322,18 @@ module single_ratchet_tooth_2d(r_base, r_tooth, tip_t, z_bottom, z_lock, z_top) 
 
 module spray_can_and_cap_3d(pressed = true) {
     z_rim_top = rim_lead_in_h + inner_rim_bead_h;
-    // When pressed = true, top of cap sits at `z_rim_top + pressed_cap_h - 0.1`
-    // (trapped underneath the 4 inward ratchet teeth!).
-    // When pressed = false (standby), top of cap sits 3.4mm higher (~5.6mm above rim).
-    cap_top_z = z_rim_top + (pressed ? (pressed_cap_h - 0.1) : (pressed_cap_h + 3.4));
-    cap_h     = 11.0;
-    cap_bot_z = cap_top_z - cap_h;
-    cap_od    = nozzle_cap_clearance_id - 1.2; // ~19.1 mm
+    // The 4 inward ratchet teeth grab the LOWER RIM SHOULDER of the spray cap!
+    // - When pressed = true: lower rim shoulder sits at `z_rim_top + pressed_cap_h - 0.1`
+    //   (trapped underneath the 4 inward ratchet teeth!).
+    // - When pressed = false (standby): lower rim shoulder sits 3.0mm higher (above the teeth).
+    lower_rim_top_z = z_rim_top + (pressed ? (pressed_cap_h - 0.1) : (pressed_cap_h + 2.9));
+    lower_rim_od    = nozzle_cap_clearance_id - 0.8; // ~19.5 mm lower flange (held by ratchet)
+    
+    // Tall central cylinder rising up through the center between the 4 ratchet teeth
+    center_cyl_od   = ratchet_tip_id - 1.6;          // ~15.3 mm (clears the 16.9mm ratchet tips!)
+    center_cyl_h    = 7.8;                           // Rises high so the nozzle jet clears the ring
+    cap_top_z       = lower_rim_top_z + center_cyl_h;
+    cap_bot_z       = lower_rim_top_z - 5.5;
 
     // 1. Dark Painted Aerosol Can Body + Metallic Dome & Outer Chime (65.5 mm)
     color("#24272a")
@@ -373,58 +378,70 @@ module spray_can_and_cap_3d(pressed = true) {
             }
     }
 
-    // 3. Black Spray Nozzle Cap (Montana-style with finger grooves & arrow)
+    // 3. Stepped Black Spray Nozzle Cap:
+    //    - Wide Lower Shoulder Rim (`lower_rim_od = 19.5mm`) caught by the 4 ratchet teeth
+    //    - Tall Central Cylinder (`center_cyl_od = 15.3mm`) sticking up in the middle
+    nozzle_z = cap_top_z - 3.0;
     color("#1a1c1e")
         difference() {
             union() {
-                // Main cylindrical cap body
+                // Lower wide skirt & shoulder rim (what the ratchet teeth lock onto!)
                 translate([0, 0, cap_bot_z])
-                    cylinder(h = cap_h - 0.8, d1 = cap_od + 1.0, d2 = cap_od);
-                // Slightly chamfered top rim
-                translate([0, 0, cap_top_z - 0.85])
-                    cylinder(h = 0.85, d1 = cap_od, d2 = cap_od - 0.8);
+                    cylinder(h = lower_rim_top_z - cap_bot_z - 0.3, d = lower_rim_od);
+                translate([0, 0, lower_rim_top_z - 0.35])
+                    cylinder(h = 0.35, d1 = lower_rim_od, d2 = lower_rim_od - 0.5);
+
+                // Fillet between lower shoulder and tall central cylinder
+                translate([0, 0, lower_rim_top_z - 0.1])
+                    cylinder(h = 0.9, d1 = center_cyl_od + 1.0, d2 = center_cyl_od);
+
+                // Tall central cylinder rising above the lower rim
+                translate([0, 0, lower_rim_top_z])
+                    cylinder(h = center_cyl_h - 0.6, d = center_cyl_od);
+                translate([0, 0, cap_top_z - 0.65])
+                    cylinder(h = 0.65, d1 = center_cyl_od, d2 = center_cyl_od - 0.7);
             }
-            // Recessed finger-pad dish on top
-            translate([0, 0, cap_top_z - 0.35])
-                cylinder(h = 0.5, d = cap_od - 2.4);
-            // Front pocket for the red nozzle insert
-            translate([cap_od / 2 - 1.2, 0, cap_top_z - 3.6])
+            // Recessed finger-pad dish on top of the central cylinder
+            translate([0, 0, cap_top_z - 0.3])
+                cylinder(h = 0.45, d = center_cyl_od - 2.0);
+            // Front pocket on the tall central cylinder for the red nozzle insert
+            translate([center_cyl_od / 2 - 1.1, 0, nozzle_z])
                 rotate([0, 90, 0])
-                    cylinder(h = 3.0, d = 5.4, $fn = 32);
+                    cylinder(h = 2.5, d = 4.6, $fn = 32);
         }
 
-    // Top directional arrow & grip lines on the black spray cap
+    // Top directional arrow & grip lines on the tall central cylinder
     color("#32363a") {
-        translate([0.8, 0, cap_top_z - 0.36])
-            linear_extrude(height = 0.38)
+        translate([0.6, 0, cap_top_z - 0.31])
+            linear_extrude(height = 0.35)
                 polygon(points = [
-                    [ 4.2,  0.0],
-                    [-2.6,  3.0],
-                    [-1.2,  0.0],
-                    [-2.6, -3.0]
+                    [ 3.4,  0.0],
+                    [-2.0,  2.4],
+                    [-0.9,  0.0],
+                    [-2.0, -2.4]
                 ]);
-        for (gx = [-5.5 : 1.4 : -2.5]) {
-            translate([gx, 0, cap_top_z - 0.2])
-                cube([0.6, cap_od - 6.0, 0.35], center = true);
+        for (gx = [-4.4 : 1.2 : -2.0]) {
+            translate([gx, 0, cap_top_z - 0.16])
+                cube([0.5, center_cyl_od - 5.0, 0.3], center = true);
         }
     }
 
-    // 4. Red Spray Nozzle Orifice Insert (facing +X out the spray window)
+    // 4. Red Spray Nozzle Orifice Insert high on the central cylinder
     color("#e03c28")
-        translate([cap_od / 2 - 0.9, 0, cap_top_z - 3.6])
+        translate([center_cyl_od / 2 - 0.8, 0, nozzle_z])
             rotate([0, 90, 0])
                 difference() {
-                    cylinder(h = 1.1, d = 5.0, $fn = 32);
+                    cylinder(h = 1.0, d = 4.2, $fn = 32);
                     translate([0, 0, 0.3])
-                        cylinder(h = 1.0, d = 1.2, $fn = 20);
+                        cylinder(h = 1.0, d = 1.1, $fn = 20);
                 }
 
-    // 5. Translucent Paint Spray Mist Jet when Locked Down!
+    // 5. Translucent Paint Spray Mist Jet when Locked Down (completely clears the ring!)
     if (pressed) {
         %color([0.95, 0.28, 0.18, 0.35])
-            translate([cap_od / 2, 0, cap_top_z - 3.6])
+            translate([center_cyl_od / 2, 0, nozzle_z])
                 rotate([0, 90, 0])
-                    cylinder(h = 38, d1 = 1.8, d2 = 24.0);
+                    cylinder(h = 38, d1 = 1.5, d2 = 19.0);
     }
 }
 
