@@ -8,3 +8,4 @@ Before arriving at the minimal 1-piece inner-rim **FOREVAA CAP** ([`../forever_i
   *Iteration 2* — A 3-legged bridge with a central one-way zip-tie ratchet plunger ("click-click").
 
 Testing these early prints revealed that tall upright legs experience high bending stress across horizontal 3D-printing layer lines, and that the entire mechanism could instead be collapsed into a single, low-profile `X-Y`-flexing ring directly around the inner metal valve cup ([`../forever_inner_ring_cap.scad`](../forever_inner_ring_cap.scad)).
+
