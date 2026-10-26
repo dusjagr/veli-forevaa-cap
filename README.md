@@ -35,6 +35,8 @@ It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-poi
 
 ### Veli Silver × dusjagr: The Backstory
 
+![FOREVAA CAP Trainyard Banner](docs/forevaa_cap_trainyard_banner.png)
+
 [**Veli Silver**](https://www.instagram.com/veli_silver/) (moving between Zürich and Ljubljana—street bombings, fire-extinguisher paint attacks, demolition-site murals, and turning urban spaces upside down) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (DIY mad scientist, hardware hacker, and instigator behind [**Hackteria**](https://www.hackteria.org/) and [**SGMK**](https://www.mechatronicart.ch/)) have been crossing paths in underground squats, hackerspaces, and makeshift street labs from Europe to Southeast Asia for years:
 
 - **Zürich ([Zentralwäscherei](https://zentralwaescherei.space/) / [Bitwäscherei](https://www.bitwaescherei.ch/)):** Hanging around the old industrial laundry in Zürich—home to the [**Bitwäscherei**](https://www.bitwaescherei.ch/) collective and the [**Hackteria ZET**](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich) lab.
