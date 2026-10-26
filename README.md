@@ -30,6 +30,8 @@ It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-poi
 
 ## Who Made This Crap?
 
+![Veli Silver x Hackteria Bootleg Tool Card](docs/forevaa_cap_bootleg_tool_card.jpg)
+
 - **Invented by:** [**Veli Silver**](https://www.instagram.com/veli_silver/)
 - **Late-Night Vibe-Coding & Test Prints:** [**Veli Silver**](https://www.instagram.com/veli_silver/) & [**dusjagr**](https://www.dusseiller.ch/) — yelling prompts at Gemini Argon while melting plastic until the snap felt nasty enough.
 
@@ -82,5 +84,9 @@ Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering no
 - **SGMK:** [mechatronicart.ch](https://www.mechatronicart.ch/)
 
 ---
+
+![FOREVAA CAP Night Street Action](docs/forevaa_cap_night_street_bombing.jpg)
+
+![FOREVAA CAP Gallery Canvas](docs/forevaa_cap_gallery_postgraffiti.jpg)
 
 *Open-source street tool — print it, remix it, bomb responsibly.*
