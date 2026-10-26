@@ -3,7 +3,7 @@
 **A 1-piece 3D-printable one-way ratchet ring for standard aerosol spray cans.**  
 Click it onto the inner metal rim, push the spray cap down once, and it locks in place—spraying forever until the can is completely empty.
 
-![FOREVAA CAP Prototype on Spray Can](forevaa_cap_prototype.png)
+![FOREVAA CAP Prototype on Spray Can](docs/forevaa_cap_prototype.png)
 
 ---
 
@@ -30,8 +30,8 @@ Instead of complicated screws, moving parts, or tall fragile bridges, the final 
 
 | 1. Standby Mode (`preview_standby`) | 2. Locked "FOREVAA" Mode (`preview_on_can`) |
 | :---: | :---: |
-| ![Standby Mode on Spray Can](docs_render_standby.png) | ![Locked Forever Mode on Spray Can](docs_render_locked.png) |
-| *Ring clicked onto the 32 mm inner valve cup rim; spray cap sits above the 4 ratchet arms (safe to attach).* | *Spray cap pushed down once past the 4 spring arms—trapped forever in the spraying position.* |
+| ![Standby Mode on Spray Can](docs/docs_render_standby.png) | ![Locked Forever Mode on Spray Can](docs/docs_render_locked.png) |
+| *Ring clicked onto the 32 mm inner valve cup rim; spray cap lower rim sits above the 4 ratchet arms (safe to attach).* | *Spray cap pushed down once past the 4 spring arms—lower rim is trapped forever while the tall center nozzle sprays clear of the ring.* |
 
 1. **Snap onto the Inner Metal Rim (`32.0 mm` Valve Cup):**  
    The outer C-collar clicks underneath the standard 1-inch (`~32.0 mm` clinched OD) rolled metal valve mounting cup around the nozzle. Because the front `75°` is open as a spray window, the C-ring flexes horizontally in the `X-Y` plane when snapping on—aligning all stress *along* the continuous 3D-printed filament perimeters so it never delaminates across layers.
@@ -39,22 +39,22 @@ Instead of complicated screws, moving parts, or tall fragile bridges, the final 
    Before triggering, the spray nozzle cap sticks up through the center of the ring above the inward-pointing spring flanges. You can clip the ring onto the can without accidentally spraying yourself.
 3. **One-Way "Click" Forever Lock:**  
    Four tapered, curved `X-Y` spring flanges sweep inward from the ring wall with a single sawtooth ratchet catch (`pressed_cap_h = 2.2 mm` above the metal rim). When you press the spray nozzle cap down through the ring:
-   - The cap slides down the sloped top ramps, flexing the 4 spring arms outward in the `X-Y` plane.
-   - As soon as the top edge of the spray cap drops past the catch, all 4 arms **snap inward over the top of the spray cap**, trapping it permanently in the depressed position.
+   - The cap's lower shoulder rim slides down the sloped top ramps, flexing the 4 spring arms outward in the `X-Y` plane.
+   - As soon as the lower rim of the spray cap drops past the catch, all 4 arms **snap inward over the lower shoulder**, trapping it permanently in the depressed position while the tall central nozzle cylinder rises through the center.
 
-![Print Orientation Render](docs_render_ring.png)
+![Print Orientation Render](docs/docs_render_ring.png)
 
 ---
 
-## Repository Files & Design Evolution
+## Repository Structure
 
-| File | Description |
+| Path | Description |
 | :--- | :--- |
-| **[`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)** | **Final "FOREVAA CAP" (Recommended):** 1-piece inner-rim C-ring with 4 tapered `X-Y` spring flanges, single ratchet catch, and inward-embossed `"FOREVAA CAP"` lettering. |
+| **[`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)** | **Main "FOREVAA CAP" OpenSCAD Model:** 1-piece inner-rim C-ring with 4 tapered `X-Y` spring flanges, single ratchet catch, inward-embossed `"FOREVAA CAP"` text, and 3D spray can/cap preview (`render_mode`). |
 | **[`forever_inner_ring_cap.stl`](forever_inner_ring_cap.stl)** | Ready-to-print STL exported with the tuned `"perfect"` preset. |
 | **[`forever_inner_ring_cap.json`](forever_inner_ring_cap.json)** | OpenSCAD Customizer preset (`"perfect"`). |
-| **[`forever_spray_can.scad`](forever_spray_can.scad)** | *Iteration 1:* 3-legged snap bridge with a 3D-printed M12 thumbscrew for gradual screw-down actuation (supports both 65.5 mm outer can rim and 32.7 mm inner valve cup). |
-| **[`forever_spray_can_ratchet.scad`](forever_spray_can_ratchet.scad)** | *Iteration 2:* Heavy-duty 3-legged bridge and flat-printed U-arch with a central one-way zip-tie ratchet plunger. |
+| **[`docs/`](docs/)** | Documentation photos and OpenSCAD 3D renders (`forevaa_cap_prototype.png`, `docs_render_standby.png`, `docs_render_locked.png`, `docs_render_ring.png`). |
+| **[`prototypes/`](prototypes/)** | Archived early iterations (3-legged screw bridge & one-way ratchet plunger prototypes). |
 
 ---
 
