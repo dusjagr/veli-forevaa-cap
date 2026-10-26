@@ -28,6 +28,11 @@ Out of these intersections came a deceptively simple question: *What is the mini
 
 Instead of complicated screws, moving parts, or tall fragile bridges, the final design ([`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)) reduces the entire mechanism to a **single, low-profile open C-ring** (`10.2 mm` tall, ~10-minute print):
 
+| 1. Standby Mode (`preview_standby`) | 2. Locked "FOREVAA" Mode (`preview_on_can`) |
+| :---: | :---: |
+| ![Standby Mode on Spray Can](docs_render_standby.png) | ![Locked Forever Mode on Spray Can](docs_render_locked.png) |
+| *Ring clicked onto the 32 mm inner valve cup rim; spray cap sits above the 4 ratchet arms (safe to attach).* | *Spray cap pushed down once past the 4 spring arms—trapped forever in the spraying position.* |
+
 1. **Snap onto the Inner Metal Rim (`32.0 mm` Valve Cup):**  
    The outer C-collar clicks underneath the standard 1-inch (`~32.0 mm` clinched OD) rolled metal valve mounting cup around the nozzle. Because the front `75°` is open as a spray window, the C-ring flexes horizontally in the `X-Y` plane when snapping on—aligning all stress *along* the continuous 3D-printed filament perimeters so it never delaminates across layers.
 2. **Standby Mode (Safe to Attach):**  
@@ -36,6 +41,8 @@ Instead of complicated screws, moving parts, or tall fragile bridges, the final 
    Four tapered, curved `X-Y` spring flanges sweep inward from the ring wall with a single sawtooth ratchet catch (`pressed_cap_h = 2.2 mm` above the metal rim). When you press the spray nozzle cap down through the ring:
    - The cap slides down the sloped top ramps, flexing the 4 spring arms outward in the `X-Y` plane.
    - As soon as the top edge of the spray cap drops past the catch, all 4 arms **snap inward over the top of the spray cap**, trapping it permanently in the depressed position.
+
+![Print Orientation Render](docs_render_ring.png)
 
 ---
 

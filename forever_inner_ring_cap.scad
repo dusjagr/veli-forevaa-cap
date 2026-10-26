@@ -13,8 +13,8 @@
 // ============================================================================
 
 /* [Render Mode] */
-// View the single printable ring or preview it with a ghost spray cap
-render_mode = "print_ring"; // [print_ring:Single Ring (Print Orientation - Flat on Bed), preview_on_can:Upright Preview on Ghost Spray Can]
+// View the single printable ring or preview it on a 3D spray can model
+render_mode = "print_ring"; // [print_ring:Single Ring (Print Orientation - Flat on Bed), preview_on_can:Locked on Spray Can (Spraying Forever!), preview_standby:Standby on Spray Can (Before Pressing Cap)]
 
 /* [Inner Metal Rim Dimensions (Clinched 1-Inch Aerosol Mounting Cup)] */
 // Outer diameter of the clinched inner metal ring around the nozzle (mm)
@@ -317,17 +317,114 @@ module single_ratchet_tooth_2d(r_base, r_tooth, tip_t, z_bottom, z_lock, z_top) 
 }
 
 // ============================================================================
-// GHOST SPRAY CAN REFERENCE (FOR PREVIEW MODE ONLY)
+// DETAILED 3D MODEL OF SPRAY CAN, 1-INCH VALVE CUP & SPRAY CAP (FOR PREVIEW)
 // ============================================================================
 
-module ghost_inner_rim_and_nozzle() {
-    %union() {
-        // Rolled metal bead of the clinched 1-inch inner valve cup (~32.0mm OD)
-        translate([0, 0, rim_lead_in_h])
-            cylinder(h = inner_rim_bead_h, d = inner_rim_od);
-        // Depressed spray nozzle cap sitting 4mm lower (`pressed_cap_h = 2.8mm` above rim)
-        translate([0, 0, rim_lead_in_h + inner_rim_bead_h])
-            cylinder(h = pressed_cap_h, d = nozzle_cap_clearance_id - 0.5);
+module spray_can_and_cap_3d(pressed = true) {
+    z_rim_top = rim_lead_in_h + inner_rim_bead_h;
+    // When pressed = true, top of cap sits at `z_rim_top + pressed_cap_h - 0.1`
+    // (trapped underneath the 4 inward ratchet teeth!).
+    // When pressed = false (standby), top of cap sits 3.4mm higher (~5.6mm above rim).
+    cap_top_z = z_rim_top + (pressed ? (pressed_cap_h - 0.1) : (pressed_cap_h + 3.4));
+    cap_h     = 11.0;
+    cap_bot_z = cap_top_z - cap_h;
+    cap_od    = nozzle_cap_clearance_id - 1.2; // ~19.1 mm
+
+    // 1. Dark Painted Aerosol Can Body + Metallic Dome & Outer Chime (65.5 mm)
+    color("#24272a")
+        translate([0, 0, -58])
+            cylinder(h = 40, d = 65.0);
+
+    color("#b8bec4") {
+        // Rolled outer chime rim (65.5 mm OD)
+        translate([0, 0, -18])
+            rotate_extrude()
+                translate([32.75 - 1.6, 0, 0])
+                    circle(r = 1.6, $fn = 24);
+        // Inner chime groove + domed shoulder rising to the 1-inch valve cup
+        translate([0, 0, -18])
+            difference() {
+                cylinder(h = 1.6, d = 64.5);
+                translate([0, 0, 0.4])
+                    cylinder(h = 1.5, d = 59.0);
+            }
+        // Curved dome from outer rim up to the base of the 1-inch valve cup
+        translate([0, 0, -16.8])
+            cylinder(h = 16.8 + rim_lead_in_h, d1 = 59.5, d2 = inner_rim_od - 1.6);
+    }
+
+    // 2. Clinched 1-Inch Metal Valve Mounting Cup (~32.0 mm OD rolled curl)
+    color("#d4d8dc") {
+        // Rolled metal rim bead that the FOREVAA CAP snaps under
+        translate([0, 0, rim_lead_in_h + inner_rim_bead_h / 2])
+            rotate_extrude()
+                hull() {
+                    translate([inner_rim_od / 2 - 1.3,  inner_rim_bead_h / 2 - 1.2, 0])
+                        circle(r = 1.2, $fn = 24);
+                    translate([inner_rim_od / 2 - 1.3, -inner_rim_bead_h / 2 + 1.2, 0])
+                        circle(r = 1.2, $fn = 24);
+                }
+        // Recessed inner cup well around the valve stem
+        translate([0, 0, -3.5])
+            difference() {
+                cylinder(h = z_rim_top + 3.0, d = inner_rim_od - 2.2);
+                translate([0, 0, 1.5])
+                    cylinder(h = z_rim_top + 3.0, d = 23.6);
+            }
+    }
+
+    // 3. Black Spray Nozzle Cap (Montana-style with finger grooves & arrow)
+    color("#1a1c1e")
+        difference() {
+            union() {
+                // Main cylindrical cap body
+                translate([0, 0, cap_bot_z])
+                    cylinder(h = cap_h - 0.8, d1 = cap_od + 1.0, d2 = cap_od);
+                // Slightly chamfered top rim
+                translate([0, 0, cap_top_z - 0.85])
+                    cylinder(h = 0.85, d1 = cap_od, d2 = cap_od - 0.8);
+            }
+            // Recessed finger-pad dish on top
+            translate([0, 0, cap_top_z - 0.35])
+                cylinder(h = 0.5, d = cap_od - 2.4);
+            // Front pocket for the red nozzle insert
+            translate([cap_od / 2 - 1.2, 0, cap_top_z - 3.6])
+                rotate([0, 90, 0])
+                    cylinder(h = 3.0, d = 5.4, $fn = 32);
+        }
+
+    // Top directional arrow & grip lines on the black spray cap
+    color("#32363a") {
+        translate([0.8, 0, cap_top_z - 0.36])
+            linear_extrude(height = 0.38)
+                polygon(points = [
+                    [ 4.2,  0.0],
+                    [-2.6,  3.0],
+                    [-1.2,  0.0],
+                    [-2.6, -3.0]
+                ]);
+        for (gx = [-5.5 : 1.4 : -2.5]) {
+            translate([gx, 0, cap_top_z - 0.2])
+                cube([0.6, cap_od - 6.0, 0.35], center = true);
+        }
+    }
+
+    // 4. Red Spray Nozzle Orifice Insert (facing +X out the spray window)
+    color("#e03c28")
+        translate([cap_od / 2 - 0.9, 0, cap_top_z - 3.6])
+            rotate([0, 90, 0])
+                difference() {
+                    cylinder(h = 1.1, d = 5.0, $fn = 32);
+                    translate([0, 0, 0.3])
+                        cylinder(h = 1.0, d = 1.2, $fn = 20);
+                }
+
+    // 5. Translucent Paint Spray Mist Jet when Locked Down!
+    if (pressed) {
+        %color([0.95, 0.28, 0.18, 0.35])
+            translate([cap_od / 2, 0, cap_top_z - 3.6])
+                rotate([0, 90, 0])
+                    cylinder(h = 38, d1 = 1.8, d2 = 24.0);
     }
 }
 
@@ -339,6 +436,12 @@ if (render_mode == "print_ring") {
     forever_ratchet_ring(print_upside_down = true);
 
 } else if (render_mode == "preview_on_can") {
-    forever_ratchet_ring(print_upside_down = false);
-    ghost_inner_rim_and_nozzle();
+    color("#f2cf56")
+        forever_ratchet_ring(print_upside_down = false);
+    spray_can_and_cap_3d(pressed = true);
+
+} else if (render_mode == "preview_standby") {
+    color("#f2cf56")
+        forever_ratchet_ring(print_upside_down = false);
+    spray_can_and_cap_3d(pressed = false);
 }
