@@ -335,32 +335,42 @@ module spray_can_and_cap_3d(pressed = true) {
     cap_top_z       = lower_rim_top_z + center_cyl_h;
     cap_bot_z       = lower_rim_top_z - 5.5;
 
-    // 1. Dark Painted Aerosol Can Body + Metallic Dome & Outer Chime (65.5 mm)
-    color("#24272a")
+    // 1. High-Contrast Aerosol Can Body (Deep Slate + Hot-Pink Color Donut + Bright Silver Dome)
+    color("#14181f")
         translate([0, 0, -58])
-            cylinder(h = 40, d = 65.0);
+            cylinder(h = 38, d = 65.0);
 
-    color("#b8bec4") {
-        // Rolled outer chime rim (65.5 mm OD)
+    // Hot-pink spray-paint color indicator band below the outer chime
+    color("#ff1e8a")
+        translate([0, 0, -20.5])
+            cylinder(h = 2.6, d = 65.1);
+
+    // Bright polished silver outer chime rim (65.5 mm OD)
+    color("#e4e9ef") {
         translate([0, 0, -18])
             rotate_extrude()
                 translate([32.75 - 1.6, 0, 0])
                     circle(r = 1.6, $fn = 24);
-        // Inner chime groove + domed shoulder rising to the 1-inch valve cup
         translate([0, 0, -18])
             difference() {
                 cylinder(h = 1.6, d = 64.5);
                 translate([0, 0, 0.4])
                     cylinder(h = 1.5, d = 59.0);
             }
-        // Curved dome from outer rim up to the base of the 1-inch valve cup
-        translate([0, 0, -16.8])
-            cylinder(h = 16.8 + rim_lead_in_h, d1 = 59.5, d2 = inner_rim_od - 1.6);
     }
 
-    // 2. Clinched 1-Inch Metal Valve Mounting Cup (~32.0 mm OD rolled curl)
-    color("#d4d8dc") {
-        // Rolled metal rim bead that the FOREVAA CAP snaps under
+    // Brushed steel dome rising from outer rim to the 1-inch valve cup
+    color("#9ba4b0")
+        translate([0, 0, -16.8])
+            cylinder(h = 16.8 + rim_lead_in_h - 0.5, d1 = 59.5, d2 = inner_rim_od - 1.4);
+
+    // Dark gasket ring at base of valve cup for crisp visual separation
+    color("#181a1d")
+        translate([0, 0, rim_lead_in_h - 0.6])
+            cylinder(h = 0.7, d = inner_rim_od + 1.0);
+
+    // 2. Clinched 1-Inch Metal Valve Mounting Cup (~32.0 mm OD bright chrome curl)
+    color("#eef2f6") {
         translate([0, 0, rim_lead_in_h + inner_rim_bead_h / 2])
             rotate_extrude()
                 hull() {
@@ -369,7 +379,6 @@ module spray_can_and_cap_3d(pressed = true) {
                     translate([inner_rim_od / 2 - 1.3, -inner_rim_bead_h / 2 + 1.2, 0])
                         circle(r = 1.2, $fn = 24);
                 }
-        // Recessed inner cup well around the valve stem
         translate([0, 0, -3.5])
             difference() {
                 cylinder(h = z_rim_top + 3.0, d = inner_rim_od - 2.2);
@@ -378,11 +387,9 @@ module spray_can_and_cap_3d(pressed = true) {
             }
     }
 
-    // 3. Stepped Black Spray Nozzle Cap:
-    //    - Wide Lower Shoulder Rim (`lower_rim_od = 19.5mm`) caught by the 4 ratchet teeth
-    //    - Tall Central Cylinder (`center_cyl_od = 15.3mm`) sticking up in the middle
+    // 3. Stepped Spray Nozzle Cap (Dark Charcoal with High-Contrast Rim & Arrow)
     nozzle_z = cap_top_z - 3.0;
-    color("#1a1c1e")
+    color("#23272e")
         difference() {
             union() {
                 // Lower wide skirt & shoulder rim (what the ratchet teeth lock onto!)
@@ -404,14 +411,14 @@ module spray_can_and_cap_3d(pressed = true) {
             // Recessed finger-pad dish on top of the central cylinder
             translate([0, 0, cap_top_z - 0.3])
                 cylinder(h = 0.45, d = center_cyl_od - 2.0);
-            // Front pocket on the tall central cylinder for the red nozzle insert
+            // Front pocket on the tall central cylinder for the pink nozzle insert
             translate([center_cyl_od / 2 - 1.1, 0, nozzle_z])
                 rotate([0, 90, 0])
                     cylinder(h = 2.5, d = 4.6, $fn = 32);
         }
 
-    // Top directional arrow & grip lines on the tall central cylinder
-    color("#32363a") {
+    // High-contrast top directional arrow & grip lines on the tall central cylinder
+    color("#8c96a4") {
         translate([0.6, 0, cap_top_z - 0.31])
             linear_extrude(height = 0.35)
                 polygon(points = [
@@ -426,8 +433,8 @@ module spray_can_and_cap_3d(pressed = true) {
         }
     }
 
-    // 4. Red Spray Nozzle Orifice Insert high on the central cylinder
-    color("#e03c28")
+    // 4. Hot-Pink Spray Nozzle Orifice Insert high on the central cylinder
+    color("#ff1493")
         translate([center_cyl_od / 2 - 0.8, 0, nozzle_z])
             rotate([0, 90, 0])
                 difference() {
@@ -436,9 +443,9 @@ module spray_can_and_cap_3d(pressed = true) {
                         cylinder(h = 1.0, d = 1.1, $fn = 20);
                 }
 
-    // 5. Translucent Paint Spray Mist Jet when Locked Down (completely clears the ring!)
+    // 5. Vibrant Hot-Pink Translucent Paint Spray Mist Jet when Locked Down!
     if (pressed) {
-        %color([0.95, 0.28, 0.18, 0.35])
+        %color([1.0, 0.08, 0.58, 0.55])
             translate([center_cyl_od / 2, 0, nozzle_z])
                 rotate([0, 90, 0])
                     cylinder(h = 38, d1 = 1.5, d2 = 19.0);
