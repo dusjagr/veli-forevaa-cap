@@ -1,0 +1,35 @@
+{
+    "parameterSets": {
+        "measured": {
+            "$fn": "72",
+            "foot_arc_angle": "34",
+            "hub_height": "12",
+            "hub_od": "22",
+            "inner_arch_clearance_h": "22",
+            "inner_leg_thickness": "3.4",
+            "inner_leg_top_width": "9",
+            "inner_rim_bead_h": "3",
+            "inner_rim_id": "30.1",
+            "inner_rim_od": "33.5",
+            "inner_snap_undercut": "0.9",
+            "knob_flutes": "12",
+            "knob_h": "8",
+            "knob_od": "28",
+            "num_legs": "3",
+            "outer_arch_clearance_h": "40",
+            "outer_leg_thickness": "4.2",
+            "outer_leg_top_width": "11",
+            "outer_rim_bead_h": "3.2",
+            "outer_rim_id": "57.5",
+            "outer_rim_od": "65.5",
+            "outer_snap_undercut": "1.1",
+            "part_to_render": "inner_bridge",
+            "presser_tip_d": "9.5",
+            "screw_nominal_d": "12",
+            "screw_pitch": "3",
+            "thread_depth": "1.1",
+            "thread_radial_clearance": "0.35"
+        }
+    },
+    "fileFormatVersion": "1"
+}
