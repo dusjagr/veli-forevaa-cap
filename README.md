@@ -1,6 +1,6 @@
 # FOREVAA CAP
 
-![FOREVAA CAP Logo](docs/artwork/forevaa_cap_logo.png)
+![FOREVAA CAP](docs/artwork/forevaa_cap_gallery_postgraffiti.jpg)
 
 > **Click it on. Stomp the cap. Walk away.**  
 > **One tiny 3D-printed ring that turns any rattlecan into an unstoppable paint bomb.**
@@ -35,7 +35,7 @@ It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-poi
 
 ### Veli Silver × dusjagr: The Backstory
 
-![FOREVAA CAP Gallery Linen Canvas](docs/artwork/forevaa_cap_gallery_postgraffiti.jpg)
+![FOREVAA CAP Night Street Action](docs/artwork/forevaa_cap_night_street_bombing.jpg)
 
 [**Veli Silver**](https://www.instagram.com/veli_silver/) (moving between Zürich and Ljubljana—street bombings, fire-extinguisher paint attacks, demolition-site murals, and turning urban spaces upside down) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (DIY mad scientist, hardware hacker, and instigator behind [**Hackteria**](https://www.hackteria.org/) and [**SGMK**](https://www.mechatronicart.ch/)) have been crossing paths in underground squats, hackerspaces, and makeshift street labs from Europe to Southeast Asia for years:
 
