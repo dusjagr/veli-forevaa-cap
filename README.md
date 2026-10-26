@@ -1,105 +1,84 @@
 # FOREVAA CAP
 
-**A 1-piece 3D-printable one-way ratchet ring for standard aerosol spray cans.**  
-Click it onto the inner metal rim, push the spray cap down once, and it locks in place—spraying forever until the can is completely empty.
+![FOREVAA CAP Logo](docs/forevaa_cap_logo.png)
 
-![FOREVAA CAP Prototype on Spray Can](docs/forevaa_cap_prototype.png)
+> **Click it on. Stomp the cap. Walk away.**  
+> **One tiny 3D-printed ring that turns any rattlecan into an unstoppable paint bomb.**
 
----
-
-## Concept & Credits
-
-- **Invention & Concept:** [**Veli Silver**](https://www.instagram.com/veli_silver/)
-- **Co-Prompting & Rapid Prototyping:** [**Veli Silver**](https://www.instagram.com/veli_silver/) & [**dusjagr** (Marc R. Dusseiller)](https://www.dusseiller.ch/), vibe-coded into parametric OpenSCAD with Gemini during an iterative test-printing session.
-
-### Background: Veli Silver × dusjagr
-
-The paths of [**Veli Silver**](https://www.instagram.com/veli_silver/) (artist working across graffiti, spatial interventions, action painting, and subversive urban objects between Zürich and Ljubljana) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (transdisciplinary artist, researcher, hardware hacker, and co-founder of the [**Hackteria**](https://www.hackteria.org/) network and [**SGMK**](https://www.mechatronicart.ch/)) have crossed repeatedly across independent art, hacker, and DIWO (*Do-It-With-Others*) scenes from Europe to Southeast Asia:
-
-- **Zürich ([Zentralwäscherei](https://zentralwaescherei.space/) / [Bitwäscherei](https://www.bitwaescherei.ch/)):** Overlapping in Zürich's self-organized cultural and hackerspace ecosystem around the *Alte Zentralwäscherei*—home to the [**Bitwäscherei**](https://www.bitwaescherei.ch/) collective and the [**Hackteria ZET – Open Science Lab**](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich).
-- **Ljubljana ([Kersnikova](https://kersnikova.org/) / [MobileLabs](https://www.hackteria.org/wiki/MobileLabs_Hackathon)):** Shared roots and long-standing connections in Ljubljana's alternative art, squat, and open laboratory scene.
-- **Chiang Mai, Thailand ([*LLL CoLaboratory / CNX OpenLab*](https://www.hackteria.org/wiki/LLL_CoLaboratory)):** Crossing paths at the [**Laab Lu Lao (LLL) CoLaboratory**](https://www.hackteria.org/wiki/LLL_CoLaboratory) / *CNX OpenLab* in Chiang Mai's old town—an open laboratory gathering bringing together street interventions, DIY electronics, bio-art, and experimental fieldwork.
-
-Out of these intersections came a deceptively simple question: *What is the minimal 3D-printed piece of plastic needed to turn any standard rattlecan into an unstoppable, autonomous "spray-forever" performance object?*
+![FOREVAA CAP on the Can](docs/forevaa_cap_prototype.png)
 
 ---
 
-## How the FOREVAA CAP Works
+## WTF Is This?
 
-Instead of complicated screws, moving parts, or tall fragile bridges, the final design ([`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)) reduces the entire mechanism to a **single, low-profile open C-ring** (`10.2 mm` tall, ~10-minute print):
+You know the old-school trick: tape down a fat cap, wedge a coin under the lip, chuck the can into a room or roll it down a hallway, and let it empty its guts out. Problem is, tape slips, coins pop out, and half the time you blast your own fingers pink before the thing even leaves your hand.
 
-| 1. Standby Mode (`preview_standby`) | 2. Locked "FOREVAA" Mode (`preview_on_can`) |
+**FOREVAA CAP** is the clean, dirty fix.
+
+It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-pointing claws in the middle—basically **a tight little plastic arsehole / sphincter** that sits around your spray cap.
+
+1. **Click the ring onto the inner metal rim** of any standard spray can. In this position, the cap is still sitting nice and high. **Zero spray. Totally safe in your pocket or bag.**
+2. When it’s go-time, **shove the cap down through the hole**. Those four little sphincter teeth bend wide to swallow the lower rim of the cap—***CLICK***—and clench shut right over its shoulder.
+3. **There is no going back.** Once that cap is past the ring's arsehole, it is locked down **FOREVAA**. The tall nozzle sticks straight up through the middle and blasts non-stop until the can is bone dry.
+
+| 1. Chilling (Safe / Standby) | 2. Full Send (Locked FOREVAA) |
 | :---: | :---: |
-| ![Standby Mode on Spray Can](docs/docs_render_standby.png) | ![Locked Forever Mode on Spray Can](docs/docs_render_locked.png) |
-| *Ring clicked onto the 32 mm inner valve cup rim; spray cap lower rim sits above the 4 ratchet arms (safe to attach).* | *Spray cap pushed down once past the 4 spring arms—lower rim is trapped forever while the tall center nozzle sprays clear of the ring.* |
+| ![Standby Mode](docs/docs_render_standby.png) | ![Locked Forever Mode](docs/docs_render_locked.png) |
+| *Clipped on the inner rim. Cap sits above the sphincter teeth—won't go off in your bag.* | *Push the cap down once—the 4 claws clench shut over the lower rim and it blasts forever.* |
 
-1. **Snap onto the Inner Metal Rim (`32.0 mm` Valve Cup):**  
-   The outer C-collar clicks underneath the standard 1-inch (`~32.0 mm` clinched OD) rolled metal valve mounting cup around the nozzle. Because the front `75°` is open as a spray window, the C-ring flexes horizontally in the `X-Y` plane when snapping on—aligning all stress *along* the continuous 3D-printed filament perimeters so it never delaminates across layers.
-2. **Standby Mode (Safe to Attach):**  
-   Before triggering, the spray nozzle cap sticks up through the center of the ring above the inward-pointing spring flanges. You can clip the ring onto the can without accidentally spraying yourself.
-3. **One-Way "Click" Forever Lock:**  
-   Four tapered, curved `X-Y` spring flanges sweep inward from the ring wall with a single sawtooth ratchet catch (`pressed_cap_h = 2.2 mm` above the metal rim). When you press the spray nozzle cap down through the ring:
-   - The cap's lower shoulder rim slides down the sloped top ramps, flexing the 4 spring arms outward in the `X-Y` plane.
-   - As soon as the lower rim of the spray cap drops past the catch, all 4 arms **snap inward over the lower shoulder**, trapping it permanently in the depressed position while the tall central nozzle cylinder rises through the center.
+---
+
+## Who Made This Crap?
+
+- **Invented by:** [**Veli Silver**](https://www.instagram.com/veli_silver/)
+- **Late-Night Vibe-Coding & Test Prints:** [**Veli Silver**](https://www.instagram.com/veli_silver/) & [**dusjagr**](https://www.dusseiller.ch/) — yelling prompts at Gemini Argon while melting plastic until the snap felt nasty enough.
+
+### Veli Silver × dusjagr: The Backstory
+
+[**Veli Silver**](https://www.instagram.com/veli_silver/) (moving between Zürich and Ljubljana—street bombings, fire-extinguisher paint attacks, demolition-site murals, and turning urban spaces upside down) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (DIY mad scientist, hardware hacker, and instigator behind [**Hackteria**](https://www.hackteria.org/) and [**SGMK**](https://www.mechatronicart.ch/)) have been crossing paths in underground squats, hackerspaces, and makeshift street labs from Europe to Southeast Asia for years:
+
+- **Zürich ([Zentralwäscherei](https://zentralwaescherei.space/) / [Bitwäscherei](https://www.bitwaescherei.ch/)):** Hanging around the old industrial laundry in Zürich—home to the [**Bitwäscherei**](https://www.bitwaescherei.ch/) collective and the [**Hackteria ZET**](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich) lab.
+- **Ljubljana ([Kersnikova](https://kersnikova.org/) / [MobileLabs](https://www.hackteria.org/wiki/MobileLabs_Hackathon)):** Old stomping grounds in Ljubljana’s squat, street-art, and underground lab scene.
+- **Chiang Mai, Thailand ([*LLL CoLaboratory / CNX OpenLab*](https://www.hackteria.org/wiki/LLL_CoLaboratory)):** Crossing paths again in Chiang Mai's old town for the *Laab Lu Lao (LLL) CoLaboratory*—mixing raw street energy, spiced minced meat, local lao, and DIY hardware hacking.
+
+At first we tried over-engineering tall 3-legged bridges with 3D-printed thumbscrews and zip-tie plungers (buried in [`prototypes/`](prototypes/)). They looked like sci-fi tripods and snapped right off along the 3D-print layer lines. So we threw all that out and stripped it down to the raw minimum: **one flat C-ring, four flexing sphincter claws, one click, forever spray.**
 
 ![Print Orientation Render](docs/docs_render_ring.png)
 
 ---
 
-## Repository Structure
+## Print It Yourself (10 Minutes, Zero Supports)
 
-| Path | Description |
-| :--- | :--- |
-| **[`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)** | **Main "FOREVAA CAP" OpenSCAD Model:** 1-piece inner-rim C-ring with 4 tapered `X-Y` spring flanges, single ratchet catch, inward-embossed `"FOREVAA CAP"` text, and 3D spray can/cap preview (`render_mode`). |
-| **[`forever_inner_ring_cap.stl`](forever_inner_ring_cap.stl)** | Ready-to-print STL exported with the tuned `"perfect"` preset. |
-| **[`forever_inner_ring_cap.json`](forever_inner_ring_cap.json)** | OpenSCAD Customizer preset (`"perfect"`). |
-| **[`docs/`](docs/)** | Documentation photos and OpenSCAD 3D renders (`forevaa_cap_prototype.png`, `docs_render_standby.png`, `docs_render_locked.png`, `docs_render_ring.png`). |
-| **[`prototypes/`](prototypes/)** | Archived early iterations (3-legged screw bridge & one-way ratchet plunger prototypes). |
+Grab **[`forever_inner_ring_cap.stl`](forever_inner_ring_cap.stl)** and throw it on any cheap FDM printer:
 
----
+- **Drop it flat:** It prints upside-down on its flat face (`Z = 0`). **No supports, no brim, no bullshit.**
+- **Plastic:** **PETG**, **ASA**, or **Tough PLA / PLA+** so the four claws have good springy snap without cracking.
+- **Walls:** **3–4 perimeters** (`0.15 mm` or `0.20 mm` layer height) so the curved claws print as solid continuous loops of plastic.
 
-## 3D Printing Instructions
-
-- **Orientation:** The model defaults to `render_mode = "print_ring"`, which places the flat top face of the ring directly on the build plate (`Z = 0`). **No supports or brim required.**
-- **Material:** **PETG**, **ASA**, or **PLA+ / Tough PLA** (for snappy spring-arm recovery).
-- **Slicer Settings:**
-  - **Layer height:** `0.15 mm` or `0.20 mm`
-  - **Perimeters / Walls:** `3–4` perimeters (so the tapered `1.45 mm → 0.90 mm` spring arms print as solid continuous filament loops)
-  - **Infill:** `25–40%`
+Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering notes? Check **[`tech.md`](tech.md)**.
 
 ---
 
-## Tuned Default Parameters (`"perfect"` Preset)
+## What's in the Box
 
-All parameters can be customized in OpenSCAD via the **Customizer** panel:
-
-- `inner_rim_od = 32.0` mm *(standard clinched 1-inch aerosol valve cup)*
-- `inner_rim_bead_h = 4.0` mm
-- `nozzle_cap_clearance_id = 20.3` mm
-- `ratchet_tip_id = 16.9` mm
-- `pressed_cap_h = 2.2` mm
-- `ratchet_ramp_h = 2.2` mm
-- `outer_wall_t = 3.0` mm
-- `arm_root_thick = 1.45` mm → `arm_tip_thick = 0.90` mm (`arm_height = 3.0` mm)
-- `spring_arm_sweep_deg = 38`°, `ratchet_head_arc_deg = 12`°
-- `spray_window_angle = 75`°
-- `label_text = "FOREVAA CAP"` (`label_font_size = 6.0`, `label_emboss_depth = 0.6`, `label_char_step_deg = 15.0`)
+- **[`forever_inner_ring_cap.stl`](forever_inner_ring_cap.stl)** — Ready-to-print **FOREVAA CAP** STL (`"perfect"` preset).
+- **[`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)** — Parametric OpenSCAD file (change cap size, claw stiffness, or the text on the side).
+- **[`forever_inner_ring_cap.json`](forever_inner_ring_cap.json)** — Saved `"perfect"` preset for standard cans & caps.
+- **[`tech.md`](tech.md)** — Full technical documentation & OpenSCAD parameters.
+- **[`prototypes/`](prototypes/)** — The graveyard of over-complicated V1 & V2 tripod prototypes.
 
 ---
 
-## Links & Network
+## Links & Crew
 
 - **Veli Silver:** [@veli_silver](https://www.instagram.com/veli_silver/)
 - **dusjagr (Marc R. Dusseiller):** [dusseiller.ch](https://www.dusseiller.ch/) · [Hackteria Wiki: Dusjagr](https://www.hackteria.org/wiki/Dusjagr)
-- **Hackteria (Open Source Biological Art):** [hackteria.org](https://www.hackteria.org/)
+- **Hackteria:** [hackteria.org](https://www.hackteria.org/)
 - **LLL CoLaboratory (Chiang Mai):** [hackteria.org/wiki/LLL_CoLaboratory](https://www.hackteria.org/wiki/LLL_CoLaboratory)
 - **Hackteria ZET (Zürich):** [Hackteria ZET – Open Science Lab in Zürich](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich)
 - **Bitwäscherei & Zentralwäscherei (Zürich):** [bitwaescherei.ch](https://www.bitwaescherei.ch/) · [zentralwaescherei.space](https://zentralwaescherei.space/)
-- **SGMK (Swiss Mechatronic Art Society):** [mechatronicart.ch](https://www.mechatronicart.ch/)
+- **SGMK:** [mechatronicart.ch](https://www.mechatronicart.ch/)
 
 ---
 
-## License
-
-Open-source hardware / artistic intervention tool — share, remix, and spray responsibly.
-
+*Open-source street tool — print it, remix it, bomb responsibly.*
