@@ -1,6 +1,6 @@
 # FOREVAA CAP
 
-![FOREVAA CAP Logo](docs/forevaa_cap_logo.png)
+![FOREVAA CAP Logo](docs/artwork/forevaa_cap_logo.png)
 
 > **Click it on. Stomp the cap. Walk away.**  
 > **One tiny 3D-printed ring that turns any rattlecan into an unstoppable paint bomb.**
@@ -35,7 +35,7 @@ It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-poi
 
 ### Veli Silver × dusjagr: The Backstory
 
-![FOREVAA CAP Gallery Linen Canvas](docs/forevaa_cap_gallery_postgraffiti.jpg)
+![FOREVAA CAP Gallery Linen Canvas](docs/artwork/forevaa_cap_gallery_postgraffiti.jpg)
 
 [**Veli Silver**](https://www.instagram.com/veli_silver/) (moving between Zürich and Ljubljana—street bombings, fire-extinguisher paint attacks, demolition-site murals, and turning urban spaces upside down) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (DIY mad scientist, hardware hacker, and instigator behind [**Hackteria**](https://www.hackteria.org/) and [**SGMK**](https://www.mechatronicart.ch/)) have been crossing paths in underground squats, hackerspaces, and makeshift street labs from Europe to Southeast Asia for years:
 
@@ -67,6 +67,7 @@ Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering no
 - **[`forever_inner_ring_cap.scad`](forever_inner_ring_cap.scad)** — Parametric OpenSCAD file (change cap size, claw stiffness, or the text on the side).
 - **[`forever_inner_ring_cap.json`](forever_inner_ring_cap.json)** — Saved `"perfect"` preset for standard cans & caps.
 - **[`tech.md`](tech.md)** — Full technical documentation & OpenSCAD parameters.
+- **[`docs/artwork/`](docs/artwork/)** — Street art logos, zines, bootleg tool cards, and sticker graphics.
 - **[`prototypes/`](prototypes/)** — The graveyard of over-complicated V1 & V2 tripod prototypes.
 
 ---

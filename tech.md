@@ -54,6 +54,7 @@ Instead of complicated screws, moving parts, or tall fragile bridges, the final 
 | **[`forever_inner_ring_cap.stl`](forever_inner_ring_cap.stl)** | Ready-to-print STL exported with the tuned `"perfect"` preset. |
 | **[`forever_inner_ring_cap.json`](forever_inner_ring_cap.json)** | OpenSCAD Customizer preset (`"perfect"`). |
 | **[`docs/`](docs/)** | Documentation photos and OpenSCAD 3D renders (`forevaa_cap_prototype.png`, `docs_render_standby.png`, `docs_render_locked.png`, `docs_render_ring.png`). |
+| **[`docs/artwork/`](docs/artwork/)** | Street art logos, zines, bootleg tool cards, and sticker graphics. |
 | **[`prototypes/`](prototypes/)** | Archived early iterations (3-legged screw bridge & one-way ratchet plunger prototypes). |
 
 ---
