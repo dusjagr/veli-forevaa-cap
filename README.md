@@ -39,8 +39,9 @@ It’s a tiny, 10-minute piece of 3D-printed plastic with four little inward-poi
 
 [**Veli Silver**](https://www.instagram.com/veli_silver/) (moving between Zürich and Ljubljana—street bombings, fire-extinguisher paint attacks, demolition-site murals, and turning urban spaces upside down) and [**dusjagr**](https://www.hackteria.org/wiki/Dusjagr) (DIY mad scientist, hardware hacker, and instigator behind [**Hackteria**](https://www.hackteria.org/) and [**SGMK**](https://www.mechatronicart.ch/)) have been crossing paths in underground squats, hackerspaces, and makeshift street labs from Europe to Southeast Asia for years:
 
-- **Zürich ([Zentralwäscherei](https://zentralwaescherei.space/) / [Bitwäscherei](https://www.bitwaescherei.ch/)):** Hanging around the old industrial laundry in Zürich—home to the [**Bitwäscherei**](https://www.bitwaescherei.ch/) collective and the [**Hackteria ZET**](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich) lab.
-- **Ljubljana ([Kersnikova](https://kersnikova.org/) / [MobileLabs](https://www.hackteria.org/wiki/MobileLabs_Hackathon)):** Old stomping grounds in Ljubljana’s squat, street-art, and underground lab scene.
+- **Zürich ([Zentralwäscherei](https://zentralwaescherei.space/) / [Bitwäscherei](https://www.bitwaescherei.ch/)):** Hanging around the old industrial laundry in Zürich—home to the [**Bitwäscherei**](https://www.bitwaescherei.ch/) collective and the [**Hackteria ZET**](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich) open science lab.
+- **Ljubljana ([Kersnikova](https://kersnikova.org/) / [MobileLabs](https://www.hackteria.org/wiki/MobileLabs_Hackathon) / [Cirkulacija 2](https://www.cirkulacija2.org/) / ROG):** Deep in Ljubljana’s autonomous squat, street-art, and media-lab underground—from biohacking and DIY electronics sessions at [**Kersnikova Institute**](https://kersnikova.org/) and the [**MobileLabs**](https://www.hackteria.org/wiki/MobileLabs_Hackathon) hackathons, to the raw halls and graffiti walls of the autonomous **Tovarna ROG** factory and the rogue artist-run circuitry and noise laboratory [**Cirkulacija 2**](https://www.cirkulacija2.org/).
+- **Maribor ([KIBLA](http://www.kibla.org/) / [Pekarna](https://pekarna.org/) / [GT22](https://gt22.si/)):** Bringing the DIY noise, street interventions, and open-source hardware east across Slovenia—linking up with the autonomous cultural center **Pekarna** (the legendary squatted military bakery), multimedia culture and residencies at **MMC KIBLA / KIBLA PORTAL**, and the independent art-lab community at **GT22**.
 - **Chiang Mai, Thailand ([*LLL CoLaboratory / CNX OpenLab*](https://www.hackteria.org/wiki/LLL_CoLaboratory)):** Crossing paths again in Chiang Mai's old town for the *Laab Lu Lao (LLL) CoLaboratory*—mixing raw street energy, spiced minced meat, local lao, and DIY hardware hacking.
 
 At first we tried over-engineering tall 3-legged bridges with 3D-printed thumbscrews and zip-tie plungers (buried in [`prototypes/`](prototypes/)). They looked like sci-fi tripods and snapped right off along the 3D-print layer lines. So we threw all that out and stripped it down to the raw minimum: **one flat C-ring, four flexing sphincter claws, one click, forever spray.**
@@ -80,6 +81,10 @@ Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering no
 - **LLL CoLaboratory (Chiang Mai):** [hackteria.org/wiki/LLL_CoLaboratory](https://www.hackteria.org/wiki/LLL_CoLaboratory)
 - **Hackteria ZET (Zürich):** [Hackteria ZET – Open Science Lab in Zürich](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich)
 - **Bitwäscherei & Zentralwäscherei (Zürich):** [bitwaescherei.ch](https://www.bitwaescherei.ch/) · [zentralwaescherei.space](https://zentralwaescherei.space/)
+- **Cirkulacija 2 (Ljubljana):** [cirkulacija2.org](https://www.cirkulacija2.org/)
+- **Kersnikova (Ljubljana):** [kersnikova.org](https://kersnikova.org/)
+- **Pekarna & GT22 (Maribor):** [pekarna.org](https://pekarna.org/) · [gt22.si](https://gt22.si/)
+- **KIBLA (Maribor):** [kibla.org](http://www.kibla.org/)
 - **SGMK:** [mechatronicart.ch](https://www.mechatronicart.ch/)
 
 ---
