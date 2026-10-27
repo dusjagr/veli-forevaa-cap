@@ -76,7 +76,7 @@ Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering no
 ## Links & Crew
 
 - **Veli Silver:** [@veli_silver](https://www.instagram.com/veli_silver/)
-- **dusjagr (Marc R. Dusseiller):** [dusseiller.ch](https://www.dusseiller.ch/) · [Hackteria Wiki: Dusjagr](https://www.hackteria.org/wiki/Dusjagr)
+- **dusjagr (Marc R. Dusseiller):** [dusseiller.ch](https://dusseiller.ch/) · [Hackteria Wiki: Dusjagr](https://www.hackteria.org/wiki/Dusjagr)
 - **Hackteria:** [hackteria.org](https://www.hackteria.org/)
 - **LLL CoLaboratory (Chiang Mai):** [hackteria.org/wiki/LLL_CoLaboratory](https://www.hackteria.org/wiki/LLL_CoLaboratory)
 - **Hackteria ZET (Zürich):** [Hackteria ZET – Open Science Lab in Zürich](https://www.hackteria.org/wiki/Hackteria_ZET_%E2%80%93_Open_Science_Lab_in_Z%C3%BCrich)
@@ -89,4 +89,10 @@ Want the nerdy CAD dimensions, OpenSCAD Customizer variables, and engineering no
 
 ---
 
-*Open-source street tool — print it, remix it, bomb responsibly.*
+<div align="center">
+
+[![Bruce Lee rules](docs/artwork/bruce.gif)](https://dusseiller.ch/)
+
+*Bruce Lee rules · Open-source street tool — print it, remix it, bomb responsibly.*
+
+</div>

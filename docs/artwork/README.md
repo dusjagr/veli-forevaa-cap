@@ -30,6 +30,6 @@ A collection of bootleg logos, stickers, screenprint zine schematics, and street
 | :---: | :---: | :---: |
 | ![Gallery Postgraffiti](forevaa_cap_gallery_postgraffiti.jpg) | ![Wall Throw-Up](forevaa_cap_logo_v1_streetwall.jpg) | ![Silver Extinguisher](forevaa_cap_silver_fire_extinguisher.jpg) |
 
-| Subway Whole-Car Piece | Cartoon Spray-Can Mascot |
-| :---: | :---: |
-| ![Train Piece](forevaa_cap_stylewars_train_piece.jpg) | ![Cartoon Mascot](forevaa_cap_veli_cartoon_mascot.jpg) |
+| Subway Whole-Car Piece | Cartoon Spray-Can Mascot | Bruce Lee Rules (2002 Mascot) |
+| :---: | :---: | :---: |
+| ![Train Piece](forevaa_cap_stylewars_train_piece.jpg) | ![Cartoon Mascot](forevaa_cap_veli_cartoon_mascot.jpg) | [![Bruce Lee](bruce.gif)](https://dusseiller.ch/) |
