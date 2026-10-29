@@ -34,7 +34,7 @@ nozzle_cap_clearance_id = 20.3;
 // Inner diameter across the tips of the inward-sticking ratchet catch (mm)
 ratchet_tip_id = 16.9;
 // Height from the TOP of the metal rim to the flat locking underside of the single ratchet catch (mm)
-pressed_cap_h = 2.2;
+pressed_cap_h = 0.6; // [0.0:0.1:2.5]
 // Height of the top lead-in ramp on the single ratchet catch (mm)
 ratchet_ramp_h = 2.2;
 
@@ -46,11 +46,15 @@ arm_root_thick = 1.45;
 // Thickness of each spring arm where it narrows down at the ratchet tip (mm)
 arm_tip_thick = 0.90;
 // Vertical height (Z thickness) of the flexible spring arms (mm)
-arm_height = 3.0;
+arm_height = 2.8;
 // Angular length (sweep) of each curved spring arm (degrees)
 spring_arm_sweep_deg = 38; // [30:1:48]
 // Angular width of the ratchet tooth head at the very tip of each arm (degrees)
 ratchet_head_arc_deg = 12; // [5:1:16]
+// Inward draft angle of the spring arms toward the center as they descend (degrees)
+arm_inward_angle_deg = 4.0; // [0.0:0.5:8.0]
+// Positive undercut hook angle on the locking shelf to bite and trap the cap (degrees)
+tooth_hook_angle_deg = 5.0; // [0.0:1.0:10.0]
 // Front opening angle so the spray jet exits with zero obstruction (degrees)
 spray_window_angle = 75; // [65:1:115]
 
@@ -58,11 +62,11 @@ spray_window_angle = 75; // [65:1:115]
 // Text recessed inward into the outer surface of the ring
 label_text = "FOREVAA CAP";
 // Font size (height of letters in mm)
-label_font_size = 6.0;
+label_font_size = 5.0;
 // How deep the letters are recessed inward into the outer ring wall (mm)
-label_emboss_depth = 0.6;
+label_emboss_depth = 0.5;
 // Angular spacing between letters around the ring (degrees)
-label_char_step_deg = 15.0;
+label_char_step_deg = 13.0;
 
 /* [Resolution] */
 $fn = 96;
@@ -163,22 +167,24 @@ module ratchet_ring_geometry(
         ];
         flange_dirs = [1, 1, -1, -1];
 
-        z_arm_bot = max(z_rim_top + 0.6, z_top - arm_height);
+        z_arm_bot = max(z_rim_top - 0.2, z_top - arm_height);
 
         for (i = [0 : 3]) {
             rotate([0, 0, flange_starts[i]])
                 tapered_single_ratchet_finger(
-                    r_root     = r_wall_inner + 0.5,
-                    r_tip_base = nozzle_cap_clearance_id / 2,
-                    r_tooth    = ratchet_tip_id / 2,
-                    sweep_deg  = spring_arm_sweep_deg,
-                    head_arc   = ratchet_head_arc_deg,
-                    dir        = flange_dirs[i],
-                    root_t     = arm_root_thick,
-                    tip_t      = arm_tip_thick,
-                    z_arm_bot  = z_arm_bot,
-                    z_lock     = z_lock,
-                    z_top      = z_top
+                    r_root       = r_wall_inner + 0.5,
+                    r_tip_base   = nozzle_cap_clearance_id / 2,
+                    r_tooth      = ratchet_tip_id / 2,
+                    sweep_deg    = spring_arm_sweep_deg,
+                    head_arc     = ratchet_head_arc_deg,
+                    dir          = flange_dirs[i],
+                    root_t       = arm_root_thick,
+                    tip_t        = arm_tip_thick,
+                    z_arm_bot    = z_arm_bot,
+                    z_lock       = z_lock,
+                    z_top        = z_top,
+                    inward_angle = arm_inward_angle_deg,
+                    hook_angle   = tooth_hook_angle_deg
                 );
         }
     }
@@ -251,13 +257,16 @@ module tapered_single_ratchet_finger(
     r_root, r_tip_base, r_tooth,
     sweep_deg, head_arc, dir,
     root_t, tip_t,
-    z_arm_bot, z_lock, z_top
+    z_arm_bot, z_lock, z_top,
+    inward_angle = 4.0,
+    hook_angle   = 5.0
 ) {
-    steps = 14;
+    steps  = 14;
+    arm_h  = max(0.1, z_top - z_arm_bot);
+    max_dr = arm_h * tan(inward_angle);
 
     // Part A: Slender Tapered Curved X-Y Spring Arm
-    // Pulls inward away from the outer wall immediately so there is a wide
-    // radial flex space behind the entire length of the flange.
+    // Pulls inward away from outer wall and slants slightly inward toward the center
     for (s = [0 : steps - 1]) {
         t0 = s / steps;
         t1 = (s + 1) / steps;
@@ -265,19 +274,27 @@ module tapered_single_ratchet_finger(
         a0 = dir * t0 * sweep_deg;
         a1 = dir * t1 * sweep_deg;
 
-        // Curve profile that opens a wide flex pocket behind the arm right away
-        rad0 = r_root * pow(1 - t0, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t0, 1.6));
-        rad1 = r_root * pow(1 - t1, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t1, 1.6));
+        // Base curve profile at top
+        rad0_top = r_root * pow(1 - t0, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t0, 1.6));
+        rad1_top = r_root * pow(1 - t1, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t1, 1.6));
+
+        // Inward tilt increases towards the tip (root connects cleanly to outer wall)
+        rad0_bot = rad0_top - max_dr * t0;
+        rad1_bot = rad1_top - max_dr * t1;
 
         // Smoothly narrow the arm thickness from `root_t` (1.45mm) down to `tip_t` (0.90mm)
         w0 = root_t * (1 - t0) + tip_t * t0;
         w1 = root_t * (1 - t1) + tip_t * t1;
 
         hull() {
-            translate([rad0 * cos(a0), rad0 * sin(a0), z_arm_bot])
-                cylinder(h = z_top - z_arm_bot, d = w0, $fn = 20);
-            translate([rad1 * cos(a1), rad1 * sin(a1), z_arm_bot])
-                cylinder(h = z_top - z_arm_bot, d = w1, $fn = 20);
+            translate([rad0_top * cos(a0), rad0_top * sin(a0), z_top - 0.05])
+                cylinder(h = 0.1, d = w0, center = true, $fn = 20);
+            translate([rad0_bot * cos(a0), rad0_bot * sin(a0), z_arm_bot + 0.05])
+                cylinder(h = 0.1, d = w0, center = true, $fn = 20);
+            translate([rad1_top * cos(a1), rad1_top * sin(a1), z_top - 0.05])
+                cylinder(h = 0.1, d = w1, center = true, $fn = 20);
+            translate([rad1_bot * cos(a1), rad1_bot * sin(a1), z_arm_bot + 0.05])
+                cylinder(h = 0.1, d = w1, center = true, $fn = 20);
         }
     }
 
@@ -288,30 +305,51 @@ module tapered_single_ratchet_finger(
     rotate([0, 0, start_a])
         rotate_extrude(angle = head_arc, convexity = 8)
             single_ratchet_tooth_2d(
-                r_base   = r_tip_base,
-                r_tooth  = r_tooth,
-                tip_t    = tip_t,
-                z_bottom = min(z_arm_bot, z_lock - 0.4),
-                z_lock   = z_lock,
-                z_top    = z_top
+                r_base    = r_tip_base,
+                r_tooth   = r_tooth,
+                tip_t     = tip_t,
+                z_bottom  = min(z_arm_bot, z_lock - 0.4),
+                z_lock    = z_lock,
+                z_top     = z_top,
+                inward_dr = max_dr,
+                hook_angle= hook_angle
             );
 }
 
-// 2D Radial Profile of the Compact Single Ratchet Catch at the Narrowed Finger Tip
-module single_ratchet_tooth_2d(r_base, r_tooth, tip_t, z_bottom, z_lock, z_top) {
-    union() {
-        // Slender tip backing spine matching the narrowed `tip_t` arm end
-        translate([r_base, z_bottom])
-            square([tip_t, z_top - z_bottom]);
+// 2D Radial Profile of the Ratchet Catch with Inward Cant & Undercut Hook Angle
+module single_ratchet_tooth_2d(
+    r_base, r_tooth, tip_t, z_bottom, z_lock, z_top,
+    inward_dr = 0.2, hook_angle = 5.0
+) {
+    h_total    = max(0.1, z_top - z_bottom);
+    ratio_lock = (z_top - z_lock) / h_total;
 
-        // Single sawtooth catch (1.2mm radial catch depth):
-        // - Top ramp (`z_top` down to `z_lock`): pushes spring arm outward when cap is pressed down
-        // - Flat bottom locking shelf at `z_lock`: snaps inward over the top of the spray cap!
+    r_base_top = r_base;
+    r_base_bot = r_base - inward_dr;
+
+    shelf_r_base = r_base - inward_dr * ratio_lock;
+    shelf_r_tip  = r_tooth - inward_dr;
+
+    // Positive hook angle: inner tip rises slightly above `z_lock` to firmly trap the cap rim
+    z_hook_tip = z_lock + (shelf_r_base - shelf_r_tip) * tan(hook_angle);
+
+    union() {
+        // Tapered backing spine matching the arm's inward tilt
         polygon(points = [
-            [r_base + 0.1, z_lock],
-            [r_tooth,      z_lock],
-            [r_tooth,      z_lock + 0.3],
-            [r_base + 0.1, z_top]
+            [r_base_bot,         z_bottom],
+            [r_base_bot + tip_t, z_bottom],
+            [r_base_top + tip_t, z_top],
+            [r_base_top,         z_top]
+        ]);
+
+        // Single sawtooth catch with positive undercut hook angle:
+        // - Top ramp: pushes spring arm outward when cap is pressed down
+        // - Inward-angled bottom locking shelf: snaps over cap and bites inward when pressed!
+        polygon(points = [
+            [shelf_r_base + 0.1, z_lock],
+            [shelf_r_tip,        z_hook_tip],
+            [shelf_r_tip,        z_hook_tip + 0.3],
+            [shelf_r_base + 0.1, z_top]
         ]);
     }
 }
