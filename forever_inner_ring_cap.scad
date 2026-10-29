@@ -52,9 +52,9 @@ spring_arm_sweep_deg = 38; // [30:1:48]
 // Angular width of the ratchet tooth head at the very tip of each arm (degrees)
 ratchet_head_arc_deg = 12; // [5:1:16]
 // Inward draft angle of the spring arms toward the center as they descend (degrees)
-arm_inward_angle_deg = 4.0; // [0.0:0.5:8.0]
-// Downward slope on the underside of the arms towards the tip (mm drop)
-arm_downward_drop = 1.0; // [0.0:0.2:2.0]
+arm_inward_angle_deg = 4.0; // [0.0:0.5:10.0]
+// Vertical slope / rise angle on the underside of the arms (mm height difference from root to tip)
+arm_downward_drop = 1.0; // [0.0:0.1:2.5]
 // Positive undercut hook angle on the locking shelf to bite and trap the cap (degrees)
 tooth_hook_angle_deg = 5.0; // [0.0:1.0:10.0]
 // Front opening angle so the spray jet exits with zero obstruction (degrees)
