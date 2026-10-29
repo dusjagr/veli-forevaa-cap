@@ -285,9 +285,10 @@ module tapered_single_ratchet_finger(
         z0_top = z_top;
         z1_top = z_top;
 
-        // Underside angles downwards from root (t=0) down towards the rim at the tip (t=1)
-        z0_bot = z_arm_bot - downward_drop * t0;
-        z1_bot = z_arm_bot - downward_drop * t1;
+        // Underside angles downwards from root (t=0) down to z_lock at the tip (t=1)
+        // so the locking nose sits directly at the very bottom of the arm!
+        z0_bot = (z_lock + downward_drop) - downward_drop * t0;
+        z1_bot = (z_lock + downward_drop) - downward_drop * t1;
 
         // Base curve profile at flat top
         rad0_top = r_root * pow(1 - t0, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t0, 1.6));
@@ -314,12 +315,12 @@ module tapered_single_ratchet_finger(
     }
 
     // Part B: Compact Single Inward Ratchet Tooth at the arm tip
-    // Flat on top (z_top), while underside reaches deep down into the mounting cup
+    // Flat on top (z_top), with the locking shelf nose sitting right at the bottom edge (z_lock)!
     tip_angle = dir * sweep_deg;
     start_a   = (dir > 0) ? (tip_angle - head_arc * 0.7) : (tip_angle - head_arc * 0.3);
 
     z_tip_top = z_top;
-    z_tip_bot = z_arm_bot - downward_drop;
+    z_tip_bot = z_lock; // Nose is flush at the very bottom of the arm!
 
     rotate([0, 0, start_a])
         rotate_extrude(angle = head_arc, convexity = 8)
@@ -327,7 +328,6 @@ module tapered_single_ratchet_finger(
                 r_base     = r_tip_base,
                 r_tooth    = r_tooth,
                 tip_t      = tip_t,
-                z_bottom   = z_tip_bot,
                 z_lock     = z_lock,
                 z_top      = z_tip_top,
                 inward_dr  = max_dr,
@@ -335,35 +335,31 @@ module tapered_single_ratchet_finger(
             );
 }
 
-// 2D Radial Profile of the Ratchet Catch with Inward Cant & Undercut Hook Angle
+// 2D Radial Profile of the Ratchet Catch: Nose is at the very bottom (z_lock)
 module single_ratchet_tooth_2d(
-    r_base, r_tooth, tip_t, z_bottom, z_lock, z_top,
+    r_base, r_tooth, tip_t, z_lock, z_top,
     inward_dr = 0.2, hook_angle = 5.0
 ) {
-    h_total    = max(0.1, z_top - z_bottom);
-    ratio_lock = (z_top - z_lock) / h_total;
-
     r_base_top = r_base;
     r_base_bot = r_base - inward_dr;
 
-    shelf_r_base = r_base - inward_dr * ratio_lock;
+    shelf_r_base = r_base_bot;
     shelf_r_tip  = r_tooth - inward_dr;
 
     // Positive hook angle: inner tip rises slightly above `z_lock` to firmly trap the cap rim
     z_hook_tip = z_lock + (shelf_r_base - shelf_r_tip) * tan(hook_angle);
 
     union() {
-        // Tapered backing spine matching the arm's inward tilt
+        // Tapered backing spine: starts at z_lock at the bottom and rises to z_top
         polygon(points = [
-            [r_base_bot,         z_bottom],
-            [r_base_bot + tip_t, z_bottom],
+            [r_base_bot,         z_lock],
+            [r_base_bot + tip_t, z_lock],
             [r_base_top + tip_t, z_top],
             [r_base_top,         z_top]
         ]);
 
-        // Single sawtooth catch with positive undercut hook angle:
-        // - Top ramp: pushes spring arm outward when cap is pressed down
-        // - Inward-angled bottom locking shelf: snaps over cap and bites inward when pressed!
+        // Single sawtooth nose: starts flush at z_lock at the bottom!
+        // No stump or ledge below the shelf.
         polygon(points = [
             [shelf_r_base + 0.1, z_lock],
             [shelf_r_tip,        z_hook_tip],
