@@ -35,6 +35,8 @@ nozzle_cap_clearance_id = 20.3;
 ratchet_tip_id = 16.9;
 // Height from the TOP of the metal rim to the flat locking underside of the single ratchet catch (mm)
 pressed_cap_h = 0.6; // [0.0:0.1:2.5]
+// Total height of the outer ring and arms above the metal rim (mm) - increase for sturdier arms!
+ring_h_above_rim = 5.2; // [3.0:0.2:9.0]
 // Height of the top lead-in ramp on the single ratchet catch (mm)
 ratchet_ramp_h = 2.2;
 
@@ -86,8 +88,8 @@ module forever_ratchet_ring(print_upside_down = true) {
     z_bot       = 0;
     z_rim_top   = rim_lead_in_h + inner_rim_bead_h; // 5.8 mm
     z_lock      = z_rim_top + pressed_cap_h;        // 6.4 mm
-    // Total ring height: flat print-bed side stays 100% planar at z_top for effortless printing!
-    z_top       = z_lock + ratchet_ramp_h;          // ~8.6 mm (completely flat on print bed!)
+    // Total ring height: determined by ring_h_above_rim to give arms solid vertical stiffness!
+    z_top       = z_rim_top + max(ring_h_above_rim, pressed_cap_h + ratchet_ramp_h);
 
     if (print_upside_down) {
         // Flip upside-down so the flat top ring sits at Z = 0 on the print bed.
