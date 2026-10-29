@@ -53,6 +53,8 @@ spring_arm_sweep_deg = 38; // [30:1:48]
 ratchet_head_arc_deg = 12; // [5:1:16]
 // Inward draft angle of the spring arms toward the center as they descend (degrees)
 arm_inward_angle_deg = 4.0; // [0.0:0.5:8.0]
+// Downward vertical slope of the spring arms from root to tip (mm drop)
+arm_downward_drop = 1.4; // [0.0:0.2:2.4]
 // Positive undercut hook angle on the locking shelf to bite and trap the cap (degrees)
 tooth_hook_angle_deg = 5.0; // [0.0:1.0:10.0]
 // Front opening angle so the spray jet exits with zero obstruction (degrees)
@@ -82,9 +84,10 @@ module forever_ratchet_ring(print_upside_down = true) {
 
     // Z coordinates in upright working orientation (z = 0 at very bottom of rim clip)
     z_bot       = 0;
-    z_rim_top   = rim_lead_in_h + inner_rim_bead_h; // 4.8 mm
-    z_lock      = z_rim_top + pressed_cap_h;        // 7.6 mm (down from 12.0 mm!)
-    z_top       = z_lock + ratchet_ramp_h;          // 9.8 mm (down from 15.4 mm!)
+    z_rim_top   = rim_lead_in_h + inner_rim_bead_h; // 5.8 mm
+    z_lock      = z_rim_top + pressed_cap_h;        // 6.4 mm
+    // Total ring height: allows root of arms to start high, sloping downward to the tooth
+    z_top       = max(9.0, z_lock + ratchet_ramp_h + arm_downward_drop);
 
     if (print_upside_down) {
         // Flip upside-down so the flat top ring sits at Z = 0 on the print bed.
@@ -172,19 +175,20 @@ module ratchet_ring_geometry(
         for (i = [0 : 3]) {
             rotate([0, 0, flange_starts[i]])
                 tapered_single_ratchet_finger(
-                    r_root       = r_wall_inner + 0.5,
-                    r_tip_base   = nozzle_cap_clearance_id / 2,
-                    r_tooth      = ratchet_tip_id / 2,
-                    sweep_deg    = spring_arm_sweep_deg,
-                    head_arc     = ratchet_head_arc_deg,
-                    dir          = flange_dirs[i],
-                    root_t       = arm_root_thick,
-                    tip_t        = arm_tip_thick,
-                    z_arm_bot    = z_arm_bot,
-                    z_lock       = z_lock,
-                    z_top        = z_top,
-                    inward_angle = arm_inward_angle_deg,
-                    hook_angle   = tooth_hook_angle_deg
+                    r_root        = r_wall_inner + 0.5,
+                    r_tip_base    = nozzle_cap_clearance_id / 2,
+                    r_tooth       = ratchet_tip_id / 2,
+                    sweep_deg     = spring_arm_sweep_deg,
+                    head_arc      = ratchet_head_arc_deg,
+                    dir           = flange_dirs[i],
+                    root_t        = arm_root_thick,
+                    tip_t         = arm_tip_thick,
+                    z_arm_bot     = z_arm_bot,
+                    z_lock        = z_lock,
+                    z_top         = z_top,
+                    inward_angle  = arm_inward_angle_deg,
+                    downward_drop = arm_downward_drop,
+                    hook_angle    = tooth_hook_angle_deg
                 );
         }
     }
@@ -258,15 +262,15 @@ module tapered_single_ratchet_finger(
     sweep_deg, head_arc, dir,
     root_t, tip_t,
     z_arm_bot, z_lock, z_top,
-    inward_angle = 4.0,
-    hook_angle   = 5.0
+    inward_angle  = 4.0,
+    downward_drop = 1.4,
+    hook_angle    = 5.0
 ) {
     steps  = 14;
     arm_h  = max(0.1, z_top - z_arm_bot);
     max_dr = arm_h * tan(inward_angle);
 
-    // Part A: Slender Tapered Curved X-Y Spring Arm
-    // Pulls inward away from outer wall and slants slightly inward toward the center
+    // Part A: Slender Tapered Curved Spring Arm sloping downwards and inwards
     for (s = [0 : steps - 1]) {
         t0 = s / steps;
         t1 = (s + 1) / steps;
@@ -274,45 +278,54 @@ module tapered_single_ratchet_finger(
         a0 = dir * t0 * sweep_deg;
         a1 = dir * t1 * sweep_deg;
 
+        // Downward vertical slope from root (t=0) down to tip (t=1)
+        z0_top = z_top - downward_drop * t0;
+        z0_bot = z0_top - arm_h;
+        z1_top = z_top - downward_drop * t1;
+        z1_bot = z1_top - arm_h;
+
         // Base curve profile at top
         rad0_top = r_root * pow(1 - t0, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t0, 1.6));
         rad1_top = r_root * pow(1 - t1, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t1, 1.6));
 
-        // Inward tilt increases towards the tip (root connects cleanly to outer wall)
+        // Inward conical tilt increases towards the tip
         rad0_bot = rad0_top - max_dr * t0;
         rad1_bot = rad1_top - max_dr * t1;
 
-        // Smoothly narrow the arm thickness from `root_t` (1.45mm) down to `tip_t` (0.90mm)
+        // Smoothly narrow the arm thickness from `root_t` down to `tip_t`
         w0 = root_t * (1 - t0) + tip_t * t0;
         w1 = root_t * (1 - t1) + tip_t * t1;
 
         hull() {
-            translate([rad0_top * cos(a0), rad0_top * sin(a0), z_top - 0.05])
+            translate([rad0_top * cos(a0), rad0_top * sin(a0), z0_top - 0.05])
                 cylinder(h = 0.1, d = w0, center = true, $fn = 20);
-            translate([rad0_bot * cos(a0), rad0_bot * sin(a0), z_arm_bot + 0.05])
+            translate([rad0_bot * cos(a0), rad0_bot * sin(a0), z0_bot + 0.05])
                 cylinder(h = 0.1, d = w0, center = true, $fn = 20);
-            translate([rad1_top * cos(a1), rad1_top * sin(a1), z_top - 0.05])
+            translate([rad1_top * cos(a1), rad1_top * sin(a1), z1_top - 0.05])
                 cylinder(h = 0.1, d = w1, center = true, $fn = 20);
-            translate([rad1_bot * cos(a1), rad1_bot * sin(a1), z_arm_bot + 0.05])
+            translate([rad1_bot * cos(a1), rad1_bot * sin(a1), z1_bot + 0.05])
                 cylinder(h = 0.1, d = w1, center = true, $fn = 20);
         }
     }
 
-    // Part B: Compact Single Inward Ratchet Tooth right at the very tip of the arm
+    // Part B: Compact Single Inward Ratchet Tooth at the downward-sloped arm tip
     tip_angle = dir * sweep_deg;
-    start_a = (dir > 0) ? (tip_angle - head_arc * 0.7) : (tip_angle - head_arc * 0.3);
+    start_a   = (dir > 0) ? (tip_angle - head_arc * 0.7) : (tip_angle - head_arc * 0.3);
+
+    z_tip_top = z_top - downward_drop;
+    z_tip_bot = z_tip_top - arm_h;
 
     rotate([0, 0, start_a])
         rotate_extrude(angle = head_arc, convexity = 8)
             single_ratchet_tooth_2d(
-                r_base    = r_tip_base,
-                r_tooth   = r_tooth,
-                tip_t     = tip_t,
-                z_bottom  = min(z_arm_bot, z_lock - 0.4),
-                z_lock    = z_lock,
-                z_top     = z_top,
-                inward_dr = max_dr,
-                hook_angle= hook_angle
+                r_base     = r_tip_base,
+                r_tooth    = r_tooth,
+                tip_t      = tip_t,
+                z_bottom   = z_tip_bot,
+                z_lock     = z_lock,
+                z_top      = z_tip_top,
+                inward_dr  = max_dr,
+                hook_angle = hook_angle
             );
 }
 

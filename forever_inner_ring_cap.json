@@ -2,6 +2,7 @@
     "parameterSets": {
         "even_lower": {
             "$fn": "96",
+            "arm_downward_drop": "1.4",
             "arm_height": "2.8",
             "arm_inward_angle_deg": "4",
             "arm_root_thick": "1.45",
@@ -28,6 +29,7 @@
         },
         "ultra_low_0_4mm": {
             "$fn": "96",
+            "arm_downward_drop": "1.6",
             "arm_height": "2.8",
             "arm_inward_angle_deg": "5",
             "arm_root_thick": "1.45",
@@ -54,6 +56,7 @@
         },
         "low_profile_0_8mm": {
             "$fn": "96",
+            "arm_downward_drop": "1.2",
             "arm_height": "2.8",
             "arm_inward_angle_deg": "4",
             "arm_root_thick": "1.45",
@@ -80,6 +83,7 @@
         },
         "medium_1_4mm": {
             "$fn": "96",
+            "arm_downward_drop": "1.0",
             "arm_height": "3.0",
             "arm_inward_angle_deg": "3",
             "arm_root_thick": "1.45",
