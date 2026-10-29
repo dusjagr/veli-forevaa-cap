@@ -45,16 +45,16 @@ outer_wall_t = 3.0;
 arm_root_thick = 1.45;
 // Thickness of each spring arm where it narrows down at the ratchet tip (mm)
 arm_tip_thick = 0.90;
-// Vertical height (Z thickness) of the flexible spring arms (mm)
-arm_height = 2.8;
+// Vertical thickness of the spring arms at the root on the wall (mm)
+arm_height = 2.0;
 // Angular length (sweep) of each curved spring arm (degrees)
 spring_arm_sweep_deg = 38; // [30:1:48]
 // Angular width of the ratchet tooth head at the very tip of each arm (degrees)
 ratchet_head_arc_deg = 12; // [5:1:16]
 // Inward draft angle of the spring arms toward the center as they descend (degrees)
 arm_inward_angle_deg = 4.0; // [0.0:0.5:8.0]
-// Downward vertical slope of the spring arms from root to tip (mm drop)
-arm_downward_drop = 1.4; // [0.0:0.2:2.4]
+// Downward slope on the underside of the arms towards the tip (mm drop)
+arm_downward_drop = 1.0; // [0.0:0.2:2.0]
 // Positive undercut hook angle on the locking shelf to bite and trap the cap (degrees)
 tooth_hook_angle_deg = 5.0; // [0.0:1.0:10.0]
 // Front opening angle so the spray jet exits with zero obstruction (degrees)
@@ -86,8 +86,8 @@ module forever_ratchet_ring(print_upside_down = true) {
     z_bot       = 0;
     z_rim_top   = rim_lead_in_h + inner_rim_bead_h; // 5.8 mm
     z_lock      = z_rim_top + pressed_cap_h;        // 6.4 mm
-    // Total ring height: allows root of arms to start high, sloping downward to the tooth
-    z_top       = max(9.0, z_lock + ratchet_ramp_h + arm_downward_drop);
+    // Total ring height: flat print-bed side stays 100% planar at z_top for effortless printing!
+    z_top       = z_lock + ratchet_ramp_h;          // ~8.6 mm (completely flat on print bed!)
 
     if (print_upside_down) {
         // Flip upside-down so the flat top ring sits at Z = 0 on the print bed.
@@ -170,7 +170,8 @@ module ratchet_ring_geometry(
         ];
         flange_dirs = [1, 1, -1, -1];
 
-        z_arm_bot = max(z_rim_top - 0.2, z_top - arm_height);
+        // The underside starts at `z_top - arm_height` at the root and angles downward towards the tip
+        z_arm_bot = z_top - arm_height;
 
         for (i = [0 : 3]) {
             rotate([0, 0, flange_starts[i]])
@@ -263,14 +264,16 @@ module tapered_single_ratchet_finger(
     root_t, tip_t,
     z_arm_bot, z_lock, z_top,
     inward_angle  = 4.0,
-    downward_drop = 1.4,
+    downward_drop = 1.0,
     hook_angle    = 5.0
 ) {
     steps  = 14;
     arm_h  = max(0.1, z_top - z_arm_bot);
-    max_dr = arm_h * tan(inward_angle);
+    max_dr = (arm_h + downward_drop) * tan(inward_angle);
 
-    // Part A: Slender Tapered Curved Spring Arm sloping downwards and inwards
+    // Part A: Slender Tapered Curved Spring Arm
+    // - The print-bed side stays 100% FLAT at z_top for effortless printing!
+    // - The OTHER side (underside facing into the spray can) angles DOWNWARDS!
     for (s = [0 : steps - 1]) {
         t0 = s / steps;
         t1 = (s + 1) / steps;
@@ -278,17 +281,19 @@ module tapered_single_ratchet_finger(
         a0 = dir * t0 * sweep_deg;
         a1 = dir * t1 * sweep_deg;
 
-        // Downward vertical slope from root (t=0) down to tip (t=1)
-        z0_top = z_top - downward_drop * t0;
-        z0_bot = z0_top - arm_h;
-        z1_top = z_top - downward_drop * t1;
-        z1_bot = z1_top - arm_h;
+        // Print-bed side stays 100% planar and flat on z_top
+        z0_top = z_top;
+        z1_top = z_top;
 
-        // Base curve profile at top
+        // Underside angles downwards from root (t=0) down towards the rim at the tip (t=1)
+        z0_bot = z_arm_bot - downward_drop * t0;
+        z1_bot = z_arm_bot - downward_drop * t1;
+
+        // Base curve profile at flat top
         rad0_top = r_root * pow(1 - t0, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t0, 1.6));
         rad1_top = r_root * pow(1 - t1, 1.6) + (r_tip_base + tip_t / 2) * (1 - pow(1 - t1, 1.6));
 
-        // Inward conical tilt increases towards the tip
+        // Inward conical tilt on the underside increases towards the tip
         rad0_bot = rad0_top - max_dr * t0;
         rad1_bot = rad1_top - max_dr * t1;
 
@@ -308,12 +313,13 @@ module tapered_single_ratchet_finger(
         }
     }
 
-    // Part B: Compact Single Inward Ratchet Tooth at the downward-sloped arm tip
+    // Part B: Compact Single Inward Ratchet Tooth at the arm tip
+    // Flat on top (z_top), while underside reaches deep down into the mounting cup
     tip_angle = dir * sweep_deg;
     start_a   = (dir > 0) ? (tip_angle - head_arc * 0.7) : (tip_angle - head_arc * 0.3);
 
-    z_tip_top = z_top - downward_drop;
-    z_tip_bot = z_tip_top - arm_h;
+    z_tip_top = z_top;
+    z_tip_bot = z_arm_bot - downward_drop;
 
     rotate([0, 0, start_a])
         rotate_extrude(angle = head_arc, convexity = 8)
