@@ -36,7 +36,7 @@ ratchet_tip_id = 16.9;
 // Height from the TOP of the metal rim to the flat locking underside of the single ratchet catch (mm)
 pressed_cap_h = 0.6; // [0.0:0.1:2.5]
 // Total height of the outer ring and arms above the metal rim (mm) - increase for sturdier arms!
-ring_h_above_rim = 5.2; // [3.0:0.2:9.0]
+ring_h_above_rim = 5.0; // [3.0:0.2:9.0]
 // Height of the top lead-in ramp on the single ratchet catch (mm)
 ratchet_ramp_h = 2.2;
 
@@ -44,21 +44,21 @@ ratchet_ramp_h = 2.2;
 // Radial thickness of the outer C-ring wall (mm)
 outer_wall_t = 3.0;
 // Thickness of each spring arm at its root on the ring wall (mm)
-arm_root_thick = 1.45;
+arm_root_thick = 1.85;
 // Thickness of each spring arm where it narrows down at the ratchet tip (mm)
-arm_tip_thick = 0.90;
+arm_tip_thick = 1.30;
 // Vertical thickness of the spring arms at the root on the wall (mm)
 arm_height = 2.0;
 // Angular length (sweep) of each curved spring arm (degrees)
 spring_arm_sweep_deg = 38; // [30:1:48]
 // Angular width of the ratchet tooth head at the very tip of each arm (degrees)
-ratchet_head_arc_deg = 12; // [5:1:16]
+ratchet_head_arc_deg = 16; // [5:1:20]
 // Inward draft angle of the spring arms toward the center as they descend (degrees)
 arm_inward_angle_deg = 4.0; // [0.0:0.5:10.0]
 // Vertical slope / rise angle on the underside of the arms (mm height difference from root to tip)
 arm_downward_drop = 1.0; // [0.0:0.1:2.5]
 // Positive undercut hook angle on the locking shelf to bite and trap the cap (degrees)
-tooth_hook_angle_deg = 5.0; // [0.0:1.0:10.0]
+tooth_hook_angle_deg = 2.0; // [0.0:1.0:10.0]
 // Front opening angle so the spray jet exits with zero obstruction (degrees)
 spray_window_angle = 75; // [65:1:115]
 
